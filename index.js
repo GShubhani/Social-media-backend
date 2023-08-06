@@ -16,19 +16,20 @@ const app = express()
 connectDB()
 
 // Advanced CORS configuration
-const corsOptions = {
-    origin: function (origin, callback) {
-      const allowedOrigins = ["https://moviesplaylist2-3n59.vercel.app", "http://localhost"];
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  };
-  
-app.use(cors(corsOptions));
 app.use(cors())
+// const corsOptions = {
+//     origin: function (origin, callback) {
+//       const allowedOrigins = ["https://moviesplaylist2-3n59.vercel.app", "http://localhost"];
+//       if (!origin || allowedOrigins.includes(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//   };
+  
+// app.use(cors(corsOptions));
+
 app.use(express.json())
 app.use("/user", AllUser);
 app.use("/playlist", MoviesPlayListRouter);
