@@ -17,7 +17,8 @@ connectDB()
 
 // Configure CORS to allow requests from your frontend domain
 const corsOptions = {
-    origin: "https://moviesplaylist2-3n59.vercel.app",
+    origin: ["https://moviesplaylist2-3n59.vercel.app", "http://localhost"],
+    // origin: "https://moviesplaylist2-3n59.vercel.app",
     // You can also add more allowed origins if needed
     // origin: ["https://moviesplaylist2-3n59.vercel.app", "http://example.com"]
   };
@@ -25,7 +26,7 @@ const corsOptions = {
   
 app.use(cors(corsOptions));
 
-app.use(cors())
+// app.use(cors())
 app.use(express.json())
 app.use("/user", AllUser);
 app.use("/playlist", MoviesPlayListRouter);
