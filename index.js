@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv"
 dotenv.config()
 // import { errorHandler } from "./middleweres/Errorhandler";
-import cors from "cors"
+import cors from "cors";
 import {connectDB} from "./config/Database.js"
 import {AllUser} from "./routes/moviesUserRoute.js"
 import {MoviesPlayListRouter} from "./routes/moviesPlaylistDetailsRoute.js"
@@ -15,17 +15,19 @@ const app = express()
 
 connectDB()
 
-// Configure CORS to allow requests from your frontend domain
+// Advanced CORS configuration
 const corsOptions = {
-    origin: ["https://moviesplaylist2-3n59.vercel.app", "http://localhost"],
-    // origin: "https://moviesplaylist2-3n59.vercel.app",
-    // You can also add more allowed origins if needed
-    // origin: ["https://moviesplaylist2-3n59.vercel.app", "http://example.com"]
+    origin: function (origin, callback) {
+      const allowedOrigins = ["https://moviesplaylist2-3n59.vercel.app", "http://localhost"];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
   };
-
   
-app.use(cors(corsOptions));
-
+  app.use(cors(corsOptions));
 // app.use(cors())
 app.use(express.json())
 app.use("/user", AllUser);
