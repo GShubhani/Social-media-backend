@@ -46,9 +46,26 @@ export const getPlaylist = asyncHandler(async (request, response) => {
     }
 })
 export const getAllPlaylist = asyncHandler(async (request, response) => {
-
     try {
        const allPlaylist = await MoviesPlaylist.find({playlistType:"public"}).populate("playlistData.movieslistId")
+       response.json({allPlaylist})
+    } catch (err) {
+        console.log("Error in playlist creation:", err);
+        return response.status(500).json({ message: "Something went wrong on the server" });
+    }
+})
+export const getAllPlaylistPublic = asyncHandler(async (request, response) => {
+    try {
+       const allPlaylist = await MoviesPlaylist.find({playlistType:"public", userId: request.user._id }).populate("playlistData.movieslistId")
+       response.json({allPlaylist})
+    } catch (err) {
+        console.log("Error in playlist creation:", err);
+        return response.status(500).json({ message: "Something went wrong on the server" });
+    }
+})
+export const getAllPlaylistPrivate = asyncHandler(async (request, response) => {
+    try {
+       const allPlaylist = await MoviesPlaylist.find({playlistType:"private", userId: request.user._id }).populate("playlistData.movieslistId")
        response.json({allPlaylist})
     } catch (err) {
         console.log("Error in playlist creation:", err);
